@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Report</title>
+</head>
+<body>
+  <h1>Appointment Report</h1>
+
+  <a href="/">Home</a>
+  <a href="/appointments">View Appointments</a>
+
+  <br><br>
+
+<form method="POST">
+  <label>Start Date:</label>
+  <input type="date" name="start_date" required>
+
+  <label>End Date:</label>
+  <input type="date" name="end_date" required>
+
+
+  <br><br>
+
+  <label>Employee:</label>
+  <select name="employee_id">
+    <option value="">ALL</option>
+    {% for employee in employees %}
+    <option value="{{ employee.employee_id }}">{{ employee.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Service:</label>
+  <select name="service_id">
+      <option value="">All</option>
+      {% for service in services %}
+      <option value="{{ service.service_id }}">{{ service.service_name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Status:</label>
+  <select name="status">
+    <option value="">All</option>
+    <option value="Scheduled">Scheduled</option>
+    <option value="Completed">Completed</option>
+    <option value="Cancelled">Cancelled</option>
+  </select>
+
+  <br><br>
+
+  <button type="submit">Generate Report</button>
+</form>
+
+{% if stats and stats.total_appointments > 0 %}
+  <h2>Statistics</h2>
+  <p>Total Appointments: {{ stats.total_appointments }}</p>
+  <p>Average Duration: {{ stats.avg_duration }}</p>
+  <p>Average Price: {{ stats.avg_price }}</p>
+{% elif stats %}
+  <h2>Statistics</h2>
+  <p>No matching appointments found</p>
+{% endif %}
+
+
+{% if results %}
+  <h2>Matching Appointments</h2>
+  <table border="1" cellpadding="8">
+         <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Employee</th>
+            <th>Service</th>
+            <th>Duration</th>
+            <th>Price</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+         </tr>
+
+          {% for row in results %}
+          <tr>
+              <td>{{ row.appointment_id }}</td>
+              <td>{{ row.client_name }}</td>
+              <td>{{ row.employee_name }}</td>
+              <td>{{ row.service_name }}</td>
+              <td>{{ row.duration_minutes }}</td>
+              <td>{{ row.price }}</td>
+              <td>{{ row.appointment_date }}</td>
+              <td>{{ row.appointment_time }}</td>
+              <td>{{ row.status }}</td>
+          </tr>
+          {% endfor %}
+    </table>
+  {% endif %}
+</body>
+</html>
