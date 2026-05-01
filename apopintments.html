@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments</title>
+</head>
+<body>
+    <h1>All Appointments</h1>
+
+    <a href="/">Home</a>
+    <a href="/add_appointment">Add Appointment</a>
+
+    <br><br>
+
+  <table border="1" cellpadding="8">
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Employee</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
+      {% for appointment in appointments %}
+    <tr>
+      <td>{{ appointment.appointment_id }}</td>
+      <td>{{ appointment.client_name }}</td>
+      <td>{{ appointment.employee_name }}</td>
+      <td>{{ appointment.service_name }}</td>
+      <td>{{ appointment.appointment_date }}</td>
+      <td>{{ appointment.appointment_time }}</td>
+      <td>{{ appointment.status }}</td>
+      <td><a href ="/edit_appointment/{{ appointment.appointment_id }}">Edit</a></td>
+      <td>
+          <form action = "/delete_appointment/{{ appointment.appointment_id }}" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+      </td>
+    </tr>
+      {% endfor %}
+  </table>
+
+</body>
+</html>
