@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Appointment</title>
+</head>
+<body>
+  <h1>Edit Appointment</h1>
+
+  <a href="/">Home</a>
+  <a href="/appointments">View Appointments</a>
+
+  <br><br>
+
+  <form method="POST">
+    <label>Client:</label>
+    <select name="client_id" required>
+      {% for client in clients %}
+      <option value="{{ client.client_id }}"
+      {% if client.client_id == appointment.client_id %}selected{% endif %}>
+      {{ client.name }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Employee:</label>
+    <select name="employee_id" required>
+      {% for employee in employees %}
+      <option value="{{ employee.employee_id }}"
+              {% if employee.employee_id == appointment.employee_id %}selected{% endif %}>
+              {{ employee.name }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Service:</label>
+    <select name="service_id" required>
+      {% for service in services %}
+      <option value="{{ service.service_id }}"
+        {% if service.service_id == appointment.service_id %}selected{% endif %}>
+        {{ service.service_name }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Date:</label>
+    <input type="date" name="appointment_date" value="{{ appointment.appointment_date }}" required>
+
+
+    <br><br>
+
+    <label>Time:</label>
+    <input type="time" name="appointment_time" value="{{ appointment.appointment_time }}" required>
+
+    <br><br>
+
+    <label>Status:</label>
+    <select name="status" required>
+      <option value="Scheduled"
+              {% if appointment.status == 'Scheduled' %} selected {% endif %}>
+              Scheduled
+      </option>
+      <option value="Completed"
+              {% if appointment.status == 'Completed' %} selected {% endif %}>
+              Completed
+      </option>
+      <option value="Cancelled"
+              {% if appointment.status == 'Cancelled' %} selected {% endif %}>
+              Cancelled
+      </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">Update Appointment</button>
+  </form>
+
+</body>
+</html>
